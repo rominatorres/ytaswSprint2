@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.8.1/dist/sweetalert2.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/estilos2.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="./css/ims.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="component_test">
+    <cabecera></cabecera>
+  </div>
+  <div id="app">
+    <v-app>
+      <v-main>
+            <div id="content" class="p-4 p-md-5 pt-5">
+              <h2 class="mb-4" align="center">Rutas</h2>
+            
+              <div class="container-fluid">
+                <div>
+    
+                  <!-- FILTROS  -->
+                  <div class="btn-group" data-toggle="buttons" style="float: left;">
+                    <label class="btn btn-info">
+                        <input type="radio" name="status" value="all" checked="checked"> Todas
+                    </label>
+                    <label class="btn btn-success">
+                        <input type="radio" name="status" value="active"> Completa
+                    </label>
+                    <label class="btn btn-warning">
+                        <input type="radio" name="status" value="inactive"> En Proceso
+                    </label>
+                    <label class="btn btn-danger">
+                        <input type="radio" name="status" value="expired"> Pendiente
+                    </label>
+                  </div>
+    
+                  <!-- BOTON  -->
+                  <div style="text-align: right; margin-right: 0px;float: right; text-decoration:none;"> <v-btn rounded class=" " style="border-radius: 7px;" ><router-link style="text-decoration:none; color:green" to="./rutaCrear">Crear Ruta</router-link></button> </v-btn>
+              </div>
+            
+                <div id="dataset_rutas"  style="position:relative; height:270px; width: 100%; overflow:auto; display:block; text-align: center;">
+                  <h2></h2>
+            
+                   
+                    <!--<thead>
+                      <tr class="bg-primary text-light">
+                        <th>Id</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Grupo</th>
+                        <th>Vehículo</th>
+                        <th>Zona</th>
+                        <th>Estado</th>
+                        <th>Editar</th>
+                        <th>Detalles</th>
+                      </tr>
+                    </thead>
+    
+                    <tbody>
+                      <tr v-for="row in allData">
+                        <td>{{row.id_ruta}}</td>
+                        <td>{{row.fecha}}</td>
+                        <td>{{row.hora}}</td>
+                        <td>{{row.desc_grupo}}</td>
+                        <th>{{row.placa}}</th>
+                        <th>{{row.zonaRuta}}</th>
+                        <th>{{row.desc_estado_ruta }}</th>
+                        <td><button><router-link to="./rutaEditar"><img src="../../public/imagenes/editar.svg" width="25px"></router-link></button></td>
+                        <td><button><router-link to="./rutaDetalles"><img src="../../public/imagenes/mas.png" width="25px"></router-link></button></td>
+                      </tr>
+                      <tr v-if="nodata">
+                        <td colspan="2" align="center">
+                          No Data Found
+                        </td>
+                      </tr>
+                    </tbody>-->
+                    <v-simple-table class="mt-5">
+                      <template v-slot:default>
+                        <thead>
+                          <tr class="light-blue darken-2">
+                            <th class="white--text" style="align-items: center; text-align: center;">
+                              Id
+                            </th>
+                            <th class="white--text" style="align-items: center; text-align: center;">
+                              Fecha
+                            </th>
+                            <th class="white--text" style="align-items: center; text-align: center;">
+                              Hora
+                            </th>
+                            <th class="white--text" style="align-items: center; text-align: center;">
+                              Grupo
+                            </th>
+                            <th class="white--text" style="align-items: center; text-align: center;">
+                              Vehículo
+                            </th>
+                            <th class="white--text" style="align-items: center; text-align: center;">
+                              Zona
+                            </th>
+                            <th class="white--text" style="align-items: center; text-align: center;">
+                              Estado
+                            </th>
+                            <th class="white--text" style="align-items: center; text-align: center;">
+                              Acciones
+                            </th>
+                          
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="ruta in rutas" :key="ruta.id_ruta">
+                            <td>{{ruta.id_ruta}}</td>
+                            <td>{{ruta.fecha}}</td> 
+                            <td>{{ruta.hora}}</td>
+                            <td>{{ruta.desc_grupo}}</td>
+                            <td>{{ruta.placa}}</td>
+                            <td>{{ruta.zonaRuta}}</td>
+                            <td>{{ruta.desc_estado_ruta }}</td>
+                            <td>
+                              <v-btn>Editar</v-btn>
+                              <v-btn>Eliminar</v-btn>
+                            </td>
+                            
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+    
+                  
+                </div>
+              </div>
+    
+            </div>
+        
+      </v-main>
+    </v-app>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.8.1/dist/sweetalert2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+  <script type = "text/javascript" src = "./js/vue_component_header.js"></script>
+  <script>
+    var url="http://localhost/php_crud/CRUD2.php";
+    //var url="http://localhost/php/CRUD2.php";
+    
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data(){
+        return{
+          rutas:[],
+          ruta: {
+            id_ruta:null,
+            fecha:'',
+            hora: null,
+            desc_grupo:'',
+            placa:'',
+            zonaRuta:'',
+            desc_estado_ruta:''
+          }
+        }
+      },
+      created(){
+          this.mostrar()
+      },
+      methods:{
+          mostrar:function(){
+            axios.post(url, {opcion:'4'})
+            .then(response => {
+                this.rutas = response.data;
+                console.log(this.rutas);
+            })
+          }
+      }
+    });
+  </script>
+</body>
+</html>
